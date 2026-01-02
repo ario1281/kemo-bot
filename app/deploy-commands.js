@@ -5,8 +5,11 @@ dotenv.config();
 
 const commands = [
   new SlashCommandBuilder()
-    .setName("ping")
-    .setDescription("Pongを返します"),
+    .setName("dice")
+    .setDescription("さいころを振ります"),
+  new SlashCommandBuilder()
+    .setName("hello")
+    .setDescription("挨拶します"),
 ].map(c => c.toJSON());
 
 const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
