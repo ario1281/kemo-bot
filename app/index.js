@@ -1,5 +1,5 @@
 import { Client, GatewayIntentBits } from "discord.js";
-import dotenv from "dotenv";
+import { hello_lines } from "./models/hello_line.js";
 import config from "../config.js";
 
 dotenv.config();
@@ -24,13 +24,15 @@ client.on("messageCreate", (msg) => {
     if (msg.content.startsWith(config.prefix)) {
         const content = msg.content.substring(1, msg.content.length);
 
-        // 
-        if (content === "dice") {
-            
+        if (content === "hello") {
+            const line = hello_lines[Math.floor(Math.random() * hello_lines.length)];
+            msg.channel.send(line);
         }
 
-        if (content === "hello") {
-            msg.channel.send("お主、来おったのか");
+        // 
+        if (content === "dice") {
+            const value = Math.floor(Math.random() * 6) + 1;
+            msg.channel.send(`🎲 ${value} の目が出たのじゃ！`);
         }
     }
 });
