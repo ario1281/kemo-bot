@@ -1,23 +1,27 @@
 import { REST, Routes, SlashCommandBuilder } from "discord.js";
+import fs from "node:fs";
+import path from "node:path";
 
-const commands = [
-  new SlashCommandBuilder()
-    .setName("hello")
-    .setDescription("挨拶します"),
-  new SlashCommandBuilder()
-    .setName("dice")
-    .setDescription("さいころを振ります"),
-].map(c => c.toJSON());
+const cmds = [];
 
-const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
+const cmdsPath = path.join(process.cwd(), "app/commands");
+const cmdFiles = fs.readdirSync(cmdsPath).filter(file => file.endsWith(".js"));
 
-async function main() {
-  await rest.put(
-    Routes.applicationCommands(process.env.CLIENT_ID),
-    { body: commands }
-  );
-
-  console.log("✅ Globalコマンド登録完了（反映まで数分〜最大1時間）");
+// コマンドデータを収集
+for (const file of cmdFiles) {
+    const { default: cmd } = await import(`./commands/${file}`);
+    cmds.push(cmd.data.toJSON());
 }
 
-main();
+// RESTクライアントを作成
+const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
+
+// グローバルコマンドとして登録
+await rest.put(
+    Routes.applicationCommands(process.env.DISCORD_CLIENT_ID),
+    { body: cmds },
+);
+
+console.log("✅ Globalコマンド登録完了（反映まで数分〜最大1時間）");
+
+// end of app/deploy-commands.js
