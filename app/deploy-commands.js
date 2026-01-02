@@ -1,7 +1,5 @@
 import { REST, Routes, SlashCommandBuilder } from "discord.js";
 
-dotenv.config();
-
 const commands = [
   new SlashCommandBuilder()
     .setName("hello")

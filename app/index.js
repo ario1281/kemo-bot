@@ -2,8 +2,6 @@ import { Client, GatewayIntentBits } from "discord.js";
 import { hello_lines } from "./models/hello_line.js";
 import config from "../config.js";
 
-dotenv.config();
-
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
