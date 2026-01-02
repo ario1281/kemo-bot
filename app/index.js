@@ -33,9 +33,9 @@ client.on("messageCreate", async (msg) => {
         }
         if (cmd === "dice")
         {
-            const faces = parseInt(args[0]) || 6;
-            const value = Math.floor(Math.random() * faces) + 1;
-            await msg.channel.send(`🎲 ${faces}面サイコロで、"${value}"の目が出たのじゃ！`);
+            const face = parseInt(args[0]) || 6;
+            const value = Math.floor(Math.random() * face) + 1;
+            await msg.channel.send(`🎲 ${face}面サイコロで、"${value}"の目が出たのじゃ！`);
         }
 
     }
