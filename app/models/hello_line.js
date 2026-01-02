@@ -1,5 +1,5 @@
 // helloの返答メッセージ集
-export default hello_lines = [
+export const hello_lines = [
   "こんにちは。今日も良い毛並み日和じゃぞ〜",
   "おはようなのじゃ。主殿はもう朝ごはんは済ませたかの？",
   "こんばんはじゃ。闇夜は妾に任せるがよいぞ",
