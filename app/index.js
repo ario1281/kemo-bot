@@ -24,6 +24,7 @@ client.on("messageCreate", (message) => {
     if (message.content.startsWith(prefix)) {
         const content = message.content.substring(1, message.content.length);
 
+        // 
         if (content === "ping") {
             message.channel.send("pong");
         }
