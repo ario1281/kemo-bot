@@ -1,40 +1,40 @@
 import { REST, Routes, SlashCommandBuilder } from "discord.js";
-import fs from "node:fs";
-import path from "node:path";
 
-const cmds = [];
-
-const cmdsPath = path.join(process.cwd(), "app/commands");
-const cmdFiles = fs.readdirSync(cmdsPath).filter(file => file.endsWith(".js"));
-
-// コマンドデータを収集
-for (const file of cmdFiles) {
-    const { default: cmd } = await import(`./commands/${file}`);
-    cmds.push(cmd.data.toJSON());
-}
+const cmds = [
+    new SlashCommandBuilder()
+        .setName("hello")
+        .setDescription("ケモノたちに挨拶するのじゃ！"),
+    new SlashCommandBuilder()
+        .setName("dice")
+        .setDescription("サイコロを振るのじゃ！")
+        .addIntegerOption(option =>
+            option.setName("face")
+                .setDescription("サイコロの面の数（省略時6面）")
+                .setRequired(false)
+        ),
+].map(cmd => cmd.toJSON());
 
 // RESTクライアントを作成
 const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
 
-// グローバルコマンドとして登録
-await rest.put(
-    Routes.applicationCommands(
-      process.env.CLIENT_ID
-    ),
-    { body: cmds },
-);
+async function main() {
+    try {
+        console.log("🔄 コマンド登録中…");
+        // グローバルコマンドとして登録
+        await rest.put(
+            Routes.applicationCommands(
+                process.env.CLIENT_ID
+            ),
+            { body: cmds },
+        );
 
-console.log("✅ Globalコマンド登録完了（反映まで数分〜最大1時間）");
+        console.log("✅ Globalコマンド登録完了（反映まで数分〜最大1時間）");
 
-// ギルドコマンドとして登録
-await rest.put(
-    Routes.applicationGuildCommands(
-      process.env.CLIENT_ID, 
-      process.env.GUILD_ID
-    ),
-    { body: cmds },
-);
+    } catch (err) {
+        console.error(err);
+    }
+}
 
-console.log("✅ Guildコマンド登録完了");
+main();
 
 // end of app/deploy-commands.js

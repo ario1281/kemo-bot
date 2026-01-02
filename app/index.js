@@ -1,46 +1,43 @@
 import { Client, Collection, GatewayIntentBits } from "discord.js";
-import fs from "node:fs";
-import path from "node:path";
+import config from "../config.js";
+
+import { hello_lines } from "./models/hello_line.js";
 
 // コマンドを格納するコレクションを作成
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
     ],
 });
-
-client.commands = new Collection();
-
-const cmdsPath = path.join(process.cwd(), "app/commands");
-const cmdFiles = fs.readdirSync(cmdsPath).filter(file => file.endsWith(".js"));
-
-for (const file of cmdFiles) {
-    const { default: cmd } = await import(`./commands/${file}`);
-    client.commands.set(cmd.data.name, cmd);
-}
 
 client.once("ready", () => {
     console.log(`${client.user.tag} 準備完了じゃ！`);
 });
 
-client.on("interactionCreate", async (inter) => {
-    // ChatInputCommandか確認
-    if (!inter.isChatInputCommand()) { return; }
+client.on("messageCreate", async (msg) => {
+    // Botまたは自分のメッセージは無視
+    if(msg.author.id == client.user.id || msg.author.bot) { return; }
 
-    // コマンド取得
-    const cmd = client.commands.get(inter.commandName);
-    if (!cmd) { return; }
+    // コマンド処理
+    if(msg.content.startsWith(config.prefix)) {
+        const content = msg.content.substring(1, msg.content.length);
+        const args = content.split(" ");
+        const cmd = args.shift().toLowerCase();
 
-    // コマンド実行
-    try {
-        await cmd.execute(inter);
-    } catch (err) {
-        console.error(err);
-        // エラーメッセージを返信
-        await inter.reply({
-            content: "コマンドの実行中に不具合が発生したのじゃ…",
-            ephemeral: true,
-        });
+        if (cmd === "hello")
+        {
+            const line = hello_lines[Math.floor(Math.random() * hello_lines.length)];
+            await msg.channel.send(`${line} 🦊`);
+        }
+        if (cmd === "dice")
+        {
+            const faces = parseInt(args[0]) || 6;
+            const value = Math.floor(Math.random() * faces) + 1;
+            await msg.channel.send(`🎲 ${faces}面サイコロで、"${value}"の目が出たのじゃ！`);
+        }
+
     }
 });
 
