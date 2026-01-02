@@ -1,0 +1,4 @@
+// config
+export default {
+    prefix: "!",
+}
