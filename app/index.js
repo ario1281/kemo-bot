@@ -18,17 +18,15 @@ client.once("ready", () => {
 
 client.on("messageCreate", (msg) => {
     // 自分とBotのメッセージには反応しない
-    if (msg.author.id === client.user.id || msg.author.bot) {
-        return;
-    }
+    if (msg.author.id === client.user.id || msg.author.bot) { return; }
 
     // 1文字目にprefixが含まれているか確認
     if (msg.content.startsWith(config.prefix)) {
         const content = msg.content.substring(1, msg.content.length);
 
         // 
-        if (content === "help") {
-            msg.channel.send("説明じゃ！");
+        if (content === "dice") {
+            
         }
 
         if (content === "hello") {
