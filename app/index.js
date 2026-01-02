@@ -1,30 +1,37 @@
-import { Cilent, GatewayIntentBits } from "discord.js";
+import { Client, GatewayIntentBits } from "discord.js";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const prefix = "!";
-
-const cilent = new Cilent({
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+    ],
 });
 
-cilent.once("ready", () => {
-    console.log("Bot is online!");
+client.once("ready", () => {
+    console.log(`🤖 Logged in as ${client.user.tag}`);
 });
 
 client.on("messageCreate", (message) => {
     // Botのメッセージには反応しない
     if (message.author.bot) { return; }
 
-    // 1文字目にprefixが含まれているか確認  
+    // 1文字目にprefixが含まれているか確認 
+    const prefix = "!";
     if (message.content.startsWith(prefix)) {
-        if (message.content === "ping") {
+        const content = message.content.substring(1, message.content.length);
+
+        if (content === "ping") {
             message.channel.send("pong");
         }
 
-        if (message.content === "!hello") {
+        if (content === "hello") {
             message.channel.send("Hello there!");
         }
     }
 });
+
+client.login(process.env.DISCORD_TOKEN);
