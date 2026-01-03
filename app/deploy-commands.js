@@ -31,6 +31,11 @@ async function main() {
 
         console.log("✅ Globalコマンド登録完了（反映まで数分〜最大1時間）");
 
+        await rest.put(
+            Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID),
+            { body: [] }
+        );
+
     } catch (err) {
         console.error(err);
     }
