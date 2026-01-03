@@ -9,7 +9,7 @@ const cmds = [
         .setDescription("サイコロを振るのじゃ！")
         .addIntegerOption(option =>
             option.setName("face")
-                .setDescription("サイコロの面の数（省略時6面）")
+                .setDescription("サイコロの面の数　デフォルト:6")
                 .setRequired(false)
         ),
 ].map(cmd => cmd.toJSON());
@@ -20,6 +20,7 @@ const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
 async function main() {
     try {
         console.log("🔄 コマンド登録中…");
+
         // グローバルコマンドとして登録
         await rest.put(
             Routes.applicationCommands(

@@ -1,4 +1,4 @@
-import { Client, Collection, GatewayIntentBits } from "discord.js";
+import { Client, GatewayIntentBits } from "discord.js";
 import config from "../config.js";
 
 import { hello_lines } from "./models/hello_line.js";
@@ -12,6 +12,7 @@ const client = new Client({
     ],
 });
 
+// Botの準備完了時の処理
 client.once("ready", () => {
     console.log(`${client.user.tag} 準備完了じゃ！`);
 });
@@ -23,19 +24,19 @@ client.on("messageCreate", async (msg) => {
     // コマンド処理
     if (msg.content.startsWith(config.prefix)) {
         const content = msg.content.substring(1, msg.content.length);
+
         const args = content.split(" ");
         const cmd = args.shift().toLowerCase();
 
         if (cmd === "hello") {
-            const line = hello_lines[Math.floor(Math.random() * hello_lines.length)];
-            await msg.channel.send(`${line} 🦊`);
+            const index = Math.floor(Math.random() * hello_lines.length);
+            await msg.channel.send(`🦊 ${hello_lines[index]}`);
         }
         if (cmd === "dice") {
             const face = parseInt(args[0]) || 6;
             const value = Math.floor(Math.random() * face) + 1;
             await msg.channel.send(`🎲 ${face}面サイコロで、"${value}"の目が出たのじゃ！`);
         }
-
     }
 });
 
