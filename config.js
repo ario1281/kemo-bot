@@ -1,4 +1,0 @@
-// config
-export default {
-    prefix: "!",
-}
