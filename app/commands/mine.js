@@ -74,12 +74,12 @@ export default {
         .setDescription("まいんすいーぱー…？と言うものが出来るらしいのじゃが、妾にはよく分からんのじゃ。")
         .addIntegerOption(option =>
             option.setName("edge")
-                .setDescription("一辺のマスの数　デフォルト:12")
+                .setDescription("一辺のマス　デフォルト:12")
                 .setRequired(false)
         )
         .addIntegerOption(option =>
             option.setName("freq")
-                .setDescription("地雷の　デフォルト:20")
+                .setDescription("地雷の頻度　デフォルト:20(%)")
                 .setRequired(false)
         ),
 
