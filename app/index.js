@@ -1,5 +1,4 @@
 import { Client, Collection, GatewayIntentBits } from "discord.js";
-import config from "../config.js";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -13,10 +12,10 @@ const client = new Client({
 client.commands = new Collection();
 
 // commandsフォルダ内のコマンド定義ファイルを読み込み
-const cmdsPath = path.join(process.cwd(), "app/commands");
-const cmdFiles = fs.readdirSync(cmdsPath).filter(file => file.endsWith(".js"));
+const cmdsPath  = path.join(process.cwd(), "app/commands");
+const cmdsFiles = fs.readdirSync(cmdsPath).filter(file => file.endsWith(".js"));
 
-for (const file of cmdFiles) {
+for (const file of cmdsFiles) {
     const { default: cmd } = await import(`./commands/${file}`);
     client.commands.set(cmd.data.name, cmd);
 }
@@ -30,6 +29,7 @@ client.on("interactionCreate", async inter => {
     // チャット入力コマンドでなければ無視
     if (!inter.isChatInputCommand()) { return; }
 
+    // コマンド名からコマンド定義を取得
     const cmd = client.commands.get(inter.commandName);
     if (!cmd) { return; }
 
