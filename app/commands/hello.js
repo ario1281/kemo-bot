@@ -1,5 +1,6 @@
 
 import { SlashCommandBuilder } from "discord.js";
+import { hello_lines } from "./models/hello_line.js";
 
 export default {
     data: new SlashCommandBuilder()

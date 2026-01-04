@@ -3,8 +3,6 @@ import config from "../config.js";
 import fs from "node:fs";
 import path from "node:path";
 
-import { hello_lines } from "./models/hello_line.js";
-
 // コマンドを格納するコレクションを作成
 const client = new Client({
     intents: [

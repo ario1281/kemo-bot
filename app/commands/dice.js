@@ -12,7 +12,7 @@ export default {
         ),
     
     async execute(inter) {
-        const face = inter.options.getInteger("faces") || 6;
+        const face = inter.options.getInteger("face") || 6;
         const value = Math.floor(Math.random() * face) + 1;
 
         await inter.reply(`🎲 ${face}面サイコロで、"${value}"の目が出たのじゃ！`);
