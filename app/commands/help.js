@@ -7,6 +7,9 @@ export default {
         .setDescription("コマンド一覧、詳細を表示するのじゃ！"),
 
     async execute(inter) {
+        // オプション確認用ログ
+        console.log("name:", this.data.name);
+
         // Botに登録しているコマンド一覧を参照
         const cmds = inter.client.commands;
         const cmdName = inter.options.getString("command");

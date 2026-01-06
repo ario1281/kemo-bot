@@ -8,6 +8,10 @@ export default {
         .setDescription("妾に挨拶するのじゃ！"),
 
     async execute(inter) {
+        // オプション確認用ログ
+        console.log("name:", this.data.name);
+
+        // 
         const index = Math.floor(Math.random() * LINES.length);
         await inter.reply(LINES[index]);
     }

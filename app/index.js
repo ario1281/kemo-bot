@@ -1,6 +1,9 @@
 import { Client, Collection, GatewayIntentBits } from "discord.js";
+import dotenv from "dotenv";
 import fs from "node:fs";
 import path from "node:path";
+
+dotenv.config();
 
 // コマンドを格納するコレクションを作成
 const client = new Client({
@@ -12,7 +15,7 @@ const client = new Client({
 client.commands = new Collection();
 
 // commandsフォルダ内のコマンド定義ファイルを読み込み
-const cmdsPath  = path.join(process.cwd(), "app/commands");
+const cmdsPath = path.join(process.cwd(), "app/commands");
 const cmdsFiles = fs.readdirSync(cmdsPath).filter(file => file.endsWith(".js"));
 
 for (const file of cmdsFiles) {
@@ -39,10 +42,17 @@ client.on("interactionCreate", async inter => {
         console.error(err);
 
         // エラーメッセージを返信
-        await inter.reply({
-            content: "コマンドの実行中に不具合が発生したのじゃ…",
-            ephemeral: true,
-        });
+        if (inter.replied || inter.deferred) {
+            await inter.followUp({
+                content: "コマンドの実行中に不具合が発生したのじゃ…",
+                ephemeral: true,
+            });
+        } else {
+            await inter.reply({
+                content: "コマンドの実行中に不具合が発生したのじゃ…",
+                ephemeral: true,
+            });
+        }
     }
 });
 

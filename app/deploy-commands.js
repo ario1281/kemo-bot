@@ -1,6 +1,9 @@
 import { REST, Routes } from "discord.js";
+import dotenv from "dotenv";
 import fs from "node:fs";
 import path from "node:path";
+
+dotenv.config();
 
 // コマンドを格納する配列を作成
 const cmds = [];

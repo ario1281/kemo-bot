@@ -8,8 +8,9 @@
     "pixiv-api-client": "^0.27.0"
   },
   "scripts": {
+    "deploy": "node app/deploy-commands.js",
     "start": "node app/index.js",
-    "deploy": "node app/deploy-commands.js"
+    "dev": "nodemon app/index.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/ario1281/kemo-bot/issues"
   },
-  "homepage": "https://github.com/ario1281/kemo-bot#readme"
+  "homepage": "https://github.com/ario1281/kemo-bot#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
 }

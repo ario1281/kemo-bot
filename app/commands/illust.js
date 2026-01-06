@@ -1,5 +1,6 @@
 
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
+import dotenv from "dotenv";
 import pixiv from "pixiv-api-client";
 import { TAGS } from "../models/illust/tags.js";
 
@@ -7,12 +8,17 @@ const URI = "https://www.pixiv.net/artworks/";
 const MAX_DATA = 1000;
 const AND_INPUTS = ["女の子", "ケモ耳", "和服"];
 
+dotenv.config();
+
 export default {
     data: new SlashCommandBuilder()
         .setName("illust")
         .setDescription("そんなに… 妾が見たいのか…？"),
 
     async execute(inter) {
+        // オプション確認用ログ
+        console.log("name:", this.data.name);
+
         // 
         const nsfw = inter.channel.nsfw;
         const failed = "…やはり、恥ずかしいのじゃ！！！";

@@ -11,6 +11,10 @@ export default {
         ),
     
     async execute(inter) {
+        // オプション確認用ログ
+        console.log("name:", this.data.name);
+
+        // 
         const face = inter.options.getInteger("face") || 6;
         const value = Math.floor(Math.random() * face) + 1;
 
