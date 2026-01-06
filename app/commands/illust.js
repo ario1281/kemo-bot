@@ -1,9 +1,15 @@
 
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
 import pixiv from "pixiv-api-client";
+import { tag_dict } from "../models/illust_tags.js";
 
 const URI = "https://www.pixiv.net/artworks/";
 const MAX_DATA = 1000;
+
+function createPixivQuery(userInput) {
+    const tags = tag_dict[userInput] || [userInput];
+    return tags.json(" OR ");
+}
 
 export default {
     data: new SlashCommandBuilder()
@@ -22,7 +28,11 @@ export default {
                 process.env.PIXIV_PASSWORD
             )
 
-            const query = "女の子 ケモ耳 和服";
+            // queryの作成
+            let query = "";
+            query += createPixivQuery("女の子") + " ";
+            query += createPixivQuery("ケモ耳") + " ";
+            query += createPixivQuery("和服") + " ";
             const res = await pixiv.searchIllust(`${query} ${nsfw ? "" : "-R-18"}`);
             if (res.illusts.length === 0) {
                 await inter.editReply(failed);
