@@ -5,11 +5,7 @@ import { tag_dict } from "../models/illust_tags.js";
 
 const URI = "https://www.pixiv.net/artworks/";
 const MAX_DATA = 1000;
-
-function createPixivQuery(userInput) {
-    const tags = tag_dict[userInput] || [userInput];
-    return tags.json(" OR ");
-}
+const AND_INPUTS = ["女の子", "ケモ耳", "和服"];
 
 export default {
     data: new SlashCommandBuilder()
@@ -17,6 +13,7 @@ export default {
         .setDescription("そんなに… 妾が見たいのか…？"),
 
     async execute(inter) {
+        // 
         const nsfw = inter.channel.nsfw;
         const failed = "…やはり、恥ずかしいのじゃ！！！";
 
@@ -29,10 +26,11 @@ export default {
             )
 
             // queryの作成
-            let query = "";
-            query += createPixivQuery("女の子") + " ";
-            query += createPixivQuery("ケモ耳") + " ";
-            query += createPixivQuery("和服") + " ";
+            const orTagsArr = AND_INPUTS
+                .map(input => (tag_dict[input] || [input]).join(" OR "));
+            const query = orTagsArr.join(" ");
+
+            // イラスト検索
             const res = await pixiv.searchIllust(`${query} ${nsfw ? "" : "-R-18"}`);
             if (res.illusts.length === 0) {
                 await inter.editReply(failed);
