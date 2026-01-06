@@ -54,18 +54,19 @@ function generateBoard(rows, cols, freq) {
 
 // 絵文字に変換
 function toEmoji(n) {
-    return [
-        "🟦",
-        "1️⃣",
-        "2️⃣",
-        "3️⃣",
-        "4️⃣",
-        "5️⃣",
-        "6️⃣",
-        "7️⃣",
-        "8️⃣",
-        "9️⃣",
-    ][n];
+    const emoji = [
+        "🟦", // 0
+        "1️⃣", // 1
+        "2️⃣", // 2
+        "3️⃣", // 3
+        "4️⃣", // 4
+        "5️⃣", // 5
+        "6️⃣", // 6
+        "7️⃣", // 7
+        "8️⃣", // 8
+        "9️⃣", // 9
+    ];
+    return emoji[n];
 }
 
 export default {
@@ -74,7 +75,7 @@ export default {
         .setDescription("まいんすいーぱー…？と言うものが出来るらしいのじゃが、妾にはよく分からんのじゃ。")
         .addIntegerOption(option =>
             option.setName("edge")
-                .setDescription("一辺のマス　デフォルト:12")
+                .setDescription("一辺のマス　デフォルト:8")
                 .setRequired(false)
         )
         .addIntegerOption(option =>
@@ -85,7 +86,7 @@ export default {
 
     async execute(inter) {
         // 
-        const edge = inter.options.getInteger("edge") || 12;
+        const edge = inter.options.getInteger("edge") || 8;
         const freq = inter.options.getInteger("freq") || 20;
 
         // フィールド生成
