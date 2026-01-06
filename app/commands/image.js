@@ -31,16 +31,16 @@ export default {
                 return;
             }
 
-            // ランダムで 1枚取得する
+            // イラストデータを取得する
             const index = Math.floor(Math.random() * res.illusts.length);
-            const image = res.illusts[index];
+            const illust = res.illusts[index];
 
-            // 
+            // 埋め込みメッセージを作成
             const embed = new EmbedBuilder()
-                .setTitle(image.title)
-                .setURL(`https://www.pixiv.net/artworks/${image.id}`)
-                .setImage(image.image_urls.medium)
-                .setFooter({ text: `by ${image.user.name}` });
+                .setTitle(illust.title)
+                .setURL(`https://www.pixiv.net/artworks/${illust.id}`)
+                .setImage(illust.image_urls.large || illust.image_urls.medium)
+                .setFooter({ text: `by ${illust.user.name}` });
 
             await inter.editReply({ embeds: [embed] });
 
