@@ -18,6 +18,7 @@ export default {
         const nsfw = inter.options.getBoolean("nsfw") || false;
         await inter.deferReply();
         const errMsg = "…やはり、恥ずかしいのじゃ！！！";
+
         try {
             await pixiv.login(
                 process.env.PIXIV_USERNAME, 
@@ -37,7 +38,7 @@ export default {
             // 
             const embed = new EmbedBuilder()
                 .setTitle(image.title)
-                .setURL(`https://www.pixiv.net/artworks/{illust}`)
+                .setURL(`https://www.pixiv.net/artworks/${image.id}`)
                 .setImage(image.image_urls.medium)
                 .setFooter({ text: `by ${image.user.name}` });
 
