@@ -18,6 +18,7 @@ export default {
         const failed = "…やはり、恥ずかしいのじゃ！！！";
 
         try {
+            // 処理中メッセージを送信
             await inter.deferReply();
 
             await pixiv.login(
@@ -51,6 +52,7 @@ export default {
                 .setImage(illust.image_urls.large || illust.image_urls.medium)
                 .setFooter({ text: `by ${illust.user.name}` });
 
+            // メッセージを返信
             await inter.editReply({ embeds: [embed] });
 
         } catch (err) {
