@@ -12,7 +12,7 @@ export default {
         .addStringOption(option =>
             option.setName("nsfw")
                 .setDescription('NSFWの画像を表示します')
-                .setRequired(true)),
+                .setRequired(true),
         ),
 
     async execute(inter) {
