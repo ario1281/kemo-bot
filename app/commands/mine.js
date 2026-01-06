@@ -84,6 +84,7 @@ export default {
         ),
 
     async execute(inter) {
+        // 
         const edge = inter.options.getInteger("edge") || 12;
         const freq = inter.options.getInteger("freq") || 20;
 

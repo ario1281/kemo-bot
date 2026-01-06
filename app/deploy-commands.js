@@ -18,7 +18,7 @@ for (const file of cmdsFiles) {
 }
 
 // コマンド登録処理をエクスポート
-export default async function () {
+const deploy = async () => {
     // RESTクライアントを作成
     const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
 
@@ -33,6 +33,12 @@ export default async function () {
     );
 
     console.log("✅ Globalコマンド登録完了（反映まで数分〜最大1時間）");
+}
+
+// 直接実行された場合はデプロイを実行
+if (import.meta.url === `file://${process.cwd()}/app/deploy-commands.js`)
+{
+    await deploy();
 }
 
 // end of app/deploy-commands.js

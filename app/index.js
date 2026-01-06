@@ -15,7 +15,7 @@ const client = new Client({
 client.commands = new Collection();
 
 // commandsフォルダ内のコマンド定義ファイルを読み込み
-const cmdsPath = path.join(process.cwd(), "app/commands");
+const cmdsPath  = path.join(process.cwd(), "app/commands");
 const cmdsFiles = fs.readdirSync(cmdsPath).filter(file => file.endsWith(".js"));
 
 for (const file of cmdsFiles) {
@@ -23,9 +23,18 @@ for (const file of cmdsFiles) {
     client.commands.set(cmd.data.name, cmd);
 }
 
+console.log("登録されているコマンド一覧:");
+console.log(client.commands.map(cmd => cmd.data.name));
+
 // Botの準備完了時の処理
 client.once("ready", () => {
     console.log(`${client.user.tag} 準備完了じゃ！`);
+
+    console.log("client.commands の中身：");
+    console.log(client.commands);
+    
+    console.log("登録されているコマンド名：");
+    console.log(client.commands.map(c => c.data?.name ?? "(名前なし)"));
 });
 
 client.on("interactionCreate", async inter => {
@@ -42,17 +51,10 @@ client.on("interactionCreate", async inter => {
         console.error(err);
 
         // エラーメッセージを返信
-        if (inter.replied || inter.deferred) {
-            await inter.followUp({
-                content: "コマンドの実行中に不具合が発生したのじゃ…",
-                ephemeral: true,
-            });
-        } else {
-            await inter.reply({
-                content: "コマンドの実行中に不具合が発生したのじゃ…",
-                ephemeral: true,
-            });
-        }
+        await inter.reply({
+            content: "コマンドの実行中に不具合が発生したのじゃ…",
+            ephemeral: true,
+        });
     }
 });
 
