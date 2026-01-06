@@ -27,7 +27,7 @@ export default {
 
             const res = await pixiv.searchIllust(`${query} ${nsfw ? "R-18" : ""}`);
             if (res.illusts.length === 0) {
-                await interaction.editReply(errMsg);
+                await inter.editReply(errMsg);
                 return;
             }
 
