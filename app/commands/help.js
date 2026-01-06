@@ -27,7 +27,10 @@ export default {
                 .setDescription(cmd.data.description ?? "説明なし")
                 .setColor("Blue");
 
-            return interaction.reply({ embeds: [embed] });
+            return interaction.reply({
+                embeds: [embed],
+                ephemeral: true,
+            });
         }
 
         // ---- 一覧表示 ----
@@ -40,6 +43,9 @@ export default {
             .setDescription(list)
             .setColor("Green");
 
-        await interaction.reply({ embeds: [embed] });
+        await interaction.reply({
+            embeds: [embed], 
+            ephemeral: true,
+        });
     }
 };
