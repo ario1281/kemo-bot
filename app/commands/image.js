@@ -1,9 +1,7 @@
 
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
-import pac from "pixiv-api-client";
-const { Pixiv } = pac;
+import pixiv from "pixiv-api-client";
 
-const pixiv = new Pixiv();
 const query = "ケモ耳 和服 女の子";
 
 export default {
