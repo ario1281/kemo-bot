@@ -16,8 +16,9 @@ export default {
 
     async execute(inter) {
         const nsfw = inter.options.getBoolean("nsfw") || false;
-        await inter.deferReply();
         const errMsg = "…やはり、恥ずかしいのじゃ！！！";
+
+        await inter.deferReply();
 
         try {
             await pixiv.login(
