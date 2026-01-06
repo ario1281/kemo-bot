@@ -1,7 +1,7 @@
 
 import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
 import pixiv from "pixiv-api-client";
-import { tag_dict } from "../models/illust_tags.js";
+import { TAGS } from "../models/illust/tags.js";
 
 const URI = "https://www.pixiv.net/artworks/";
 const MAX_DATA = 1000;
@@ -27,7 +27,7 @@ export default {
 
             // queryの作成
             const orTagsArr = AND_INPUTS
-                .map(input => (tag_dict[input] || [input]).join(" OR "));
+                .map(input => (TAGS[input] || [input]).join(" OR "));
             const query = orTagsArr.join(" ");
 
             // イラスト検索
