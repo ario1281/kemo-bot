@@ -4,7 +4,8 @@
   "type": "module",
   "dependencies": {
     "discord.js": "^14.25.1",
-    "dotenv": "^17.2.3"
+    "dotenv": "^17.2.3",
+    "pixiv-api-client": "^0.27.0"
   },
   "scripts": {
     "start": "node app/index.js",
