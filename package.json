@@ -7,10 +7,18 @@
     "discord.js": "^14.25.1",
     "dotenv": "^17.2.3"
   },
+  "devDependencies": {
+    "@types/node": "^25.0.3",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
   "scripts": {
-    "deploy": "node app/deploy-commands.js",
-    "start": "node app/index.js",
-    "dev": "nodemon app/index.js"
+    "start": "ts-node app/index.ts",
+    "dev": "nodemon --exec tsx app/index.ts",
+    "deploy": "tsx app/deploy-commands.ts"
   },
   "repository": {
     "type": "git",
@@ -22,8 +30,5 @@
   "bugs": {
     "url": "https://github.com/ario1281/kemo-bot/issues"
   },
-  "homepage": "https://github.com/ario1281/kemo-bot#readme",
-  "devDependencies": {
-    "nodemon": "^3.1.11"
-  }
+  "homepage": "https://github.com/ario1281/kemo-bot#readme"
 }

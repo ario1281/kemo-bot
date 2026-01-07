@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
@@ -9,8 +9,8 @@ export default {
                 .setDescription("サイコロの面の数　デフォルト:6")
                 .setRequired(false)
         ),
-    
-    async execute(inter) {
+
+    async execute(inter: ChatInputCommandInteraction) {
         // オプション確認用ログ
         console.log("name:", this.data.name);
 

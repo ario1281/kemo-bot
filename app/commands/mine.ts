@@ -1,7 +1,7 @@
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
 
 // 盤面生成
-function generateBoard(rows, cols, freq) {
+function generateBoard(rows: number, cols: number, freq: number) {
     // 盤面初期化
     const board = Array.from({ length: rows },
         () => Array(cols).fill(0)
@@ -24,7 +24,7 @@ function generateBoard(rows, cols, freq) {
     // 周囲の地雷数カウント
     const dirs = [
         [-1, -1], [-1, +0], [-1, +1],
-        [+0, -1], [+0, +1],
+        [+0, -1],           [+0, +1],
         [+1, -1], [+1, +0], [+1, +1],
     ];
 
@@ -57,7 +57,7 @@ function generateBoard(rows, cols, freq) {
 }
 
 // 絵文字に変換
-function toEmoji(num) {
+function toEmoji(num: number) {
     return [
         "🟦", // 0
         "1️⃣", // 1
@@ -87,7 +87,7 @@ export default {
                 .setRequired(false)
         ),
 
-    async execute(inter) {
+    async execute(inter: ChatInputCommandInteraction) {
         // 
         const edge = inter.options.getInteger("edge") || 8;
         const freq = inter.options.getInteger("freq") || 20;

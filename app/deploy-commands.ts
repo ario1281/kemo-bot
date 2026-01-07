@@ -1,21 +1,26 @@
 import { REST, Routes } from "discord.js";
-import { CONFIG } from "./config.js";
+import { CONFIG } from "@/config.ts";
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
-// コマンドを格納する配列を作成
-const cmds = [];
+// コマンド用配列
+const cmds: any[] = [];
 
-// commandsフォルダ内のコマンド定義ファイルを読み込み
+// ===============================
+// commands 読み込み
+// ===============================
 const cmdsPath  = path.join(process.cwd(), "app/commands");
-const cmdsFiles = fs.readdirSync(cmdsPath).filter(file => file.endsWith(".js"));
+const cmdsFiles = fs.readdirSync(cmdsPath).filter(file => file.endsWith(".ts"));
 
 for (const file of cmdsFiles) {
     const { default: cmd } = await import(`./commands/${file}`);
     cmds.push(cmd.data.toJSON());
 }
 
-// コマンド登録処理をエクスポート
+// ===============================
+// デプロイ処理
+// ===============================
 const deploy = async () => {
     // RESTクライアントを作成
     const rest = new REST({ version: "10" }).setToken(CONFIG.DISCORD_TOKEN);
@@ -25,7 +30,7 @@ const deploy = async () => {
 
     await rest.put(
         Routes.applicationCommands(
-            process.env.CLIENT_ID
+            CONFIG.CLIENT_ID
         ),
         { body: cmds },
     );
@@ -33,10 +38,14 @@ const deploy = async () => {
     console.log("✅ Globalコマンド登録完了（反映まで数分〜最大1時間）");
 }
 
-// 直接実行された場合はデプロイを実行
-if (import.meta.url === `file://${process.cwd()}/app/deploy-commands.js`)
-{
+// ===============================
+// 直接実行時のみ実行
+// ===============================
+const current = fileURLToPath(import.meta.url);
+const entry = path.join(process.cwd(), "app/deploy-commands.ts");
+
+if (current === entry) {
     await deploy();
 }
 
-// end of app/deploy-commands.js
+// end of app/deploy-commands.ts

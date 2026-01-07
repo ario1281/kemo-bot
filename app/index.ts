@@ -1,20 +1,20 @@
 import { Client, Collection, GatewayIntentBits } from "discord.js";
-import { CONFIG } from "./config.js";
+import { CONFIG } from "@/config.ts";
 import fs from "node:fs";
 import path from "node:path";
 
 // コマンドを格納するコレクションを作成
 const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-    ],
+  intents: [
+    GatewayIntentBits.Guilds,
+  ],
 });
 
 client.commands = new Collection();
 
 // commandsフォルダ内のコマンド定義ファイルを読み込み
 const cmdsPath = path.join(process.cwd(), "app/commands");
-const cmdsFiles = fs.readdirSync(cmdsPath).filter(file => file.endsWith(".js"));
+const cmdsFiles = fs.readdirSync(cmdsPath).filter(file => file.endsWith(".ts"));
 
 for (const file of cmdsFiles) {
     const { default: cmd } = await import(`./commands/${file}`);
@@ -26,13 +26,7 @@ console.log(client.commands.map(cmd => cmd.data.name));
 
 // Botの準備完了時の処理
 client.once("ready", () => {
-    console.log(`${client.user.tag} 準備完了じゃ！`);
-
-    console.log("client.commands の中身：");
-    console.log(client.commands);
-
-    console.log("登録されているコマンド名：");
-    console.log(client.commands.map(c => c.data?.name ?? "(名前なし)"));
+    console.log(`${client.user} 準備完了じゃ！`);
 });
 
 client.on("interactionCreate", async inter => {
@@ -58,4 +52,4 @@ client.on("interactionCreate", async inter => {
 
 client.login(CONFIG.DISCORD_TOKEN);
 
-// end of app/index.js
+// end of app/index.ts

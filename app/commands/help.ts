@@ -1,12 +1,11 @@
-
-import { SlashCommandBuilder, EmbedBuilder } from "discord.js";
+import { SlashCommandBuilder, EmbedBuilder, ChatInputCommandInteraction } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
         .setName("help")
         .setDescription("コマンド一覧、詳細を表示するのじゃ！"),
 
-    async execute(inter) {
+    async execute(inter: ChatInputCommandInteraction) {
         // オプション確認用ログ
         console.log("name:", this.data.name);
 
@@ -30,14 +29,14 @@ export default {
                 .setDescription(cmd.data.description ?? "説明なし")
                 .setColor("Blue");
 
-            return interaction.reply({
+            return inter.reply({
                 embeds: [embed],
                 ephemeral: true,
             });
         }
 
         // ---- 一覧表示 ----
-        const list = commands
+        const list = cmds
             .map(cmd => `- \`/${cmd.data.name}\` — ${cmd.data.description ?? ""}`)
             .join("\n");
 
@@ -46,8 +45,8 @@ export default {
             .setDescription(list)
             .setColor("Green");
 
-        await interaction.reply({
-            embeds: [embed], 
+        await inter.reply({
+            embeds: [embed],
             ephemeral: true,
         });
     }
