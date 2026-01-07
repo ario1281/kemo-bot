@@ -24,7 +24,7 @@ function generateBoard(rows, cols, freq) {
     // 周囲の地雷数カウント
     const dirs = [
         [-1, -1], [-1, +0], [-1, +1],
-        [+0, -1],           [+0, +1],
+        [+0, -1], [+0, +1],
         [+1, -1], [+1, +0], [+1, +1],
     ];
 
@@ -44,8 +44,12 @@ function generateBoard(rows, cols, freq) {
                 if (nr < 0 || nr >= rows) { continue; }
                 if (nc < 0 || nc >= cols) { continue; }
 
-                board[r][c] = count;
+                // 
+                if (board[nr][nc] === "B") { count++; }
             }
+
+            // 
+            board[r][c] = count;
         }
     }
 
@@ -53,8 +57,8 @@ function generateBoard(rows, cols, freq) {
 }
 
 // 絵文字に変換
-function toEmoji(n) {
-    const emoji = [
+function toEmoji(num) {
+    return [
         "🟦", // 0
         "1️⃣", // 1
         "2️⃣", // 2
@@ -65,8 +69,7 @@ function toEmoji(n) {
         "7️⃣", // 7
         "8️⃣", // 8
         "9️⃣", // 9
-    ];
-    return emoji[n];
+    ][num];
 }
 
 export default {
@@ -91,12 +94,20 @@ export default {
 
         // フィールド生成
         const board = generateBoard(edge, edge, freq);
-        const msg = board.map(row =>
-            row.map(cell =>
-                cell === "B"
-                    ? "||💣||"
-                    : `||${toEmoji(cell)}||`
-            ).join("")
+
+        // 最初に開けるマスをランダムで1つ選ぶ
+        let firstRow, firstCol;
+        do {
+            firstRow = Math.floor(Math.random() * edge);
+            firstCol = Math.floor(Math.random() * edge);
+        } while (board[firstRow][firstCol] === "B");
+
+        const msg = board.map((row, r) =>
+            row.map((cell, c) => {
+                // 最初に開けるマスはそのまま表示
+                const item = cell === "B" ? "💣" : toEmoji(cell);
+                return (r === firstRow && c === firstCol) ? item : `||${item}||`;
+            }).join("")
         ).join("\n");
 
         await inter.reply(msg);

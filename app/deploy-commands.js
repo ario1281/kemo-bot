@@ -1,9 +1,7 @@
 import { REST, Routes } from "discord.js";
-import dotenv from "dotenv";
+import { CONFIG } from "./config.js";
 import fs from "node:fs";
 import path from "node:path";
-
-dotenv.config();
 
 // コマンドを格納する配列を作成
 const cmds = [];
@@ -20,7 +18,7 @@ for (const file of cmdsFiles) {
 // コマンド登録処理をエクスポート
 const deploy = async () => {
     // RESTクライアントを作成
-    const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
+    const rest = new REST({ version: "10" }).setToken(CONFIG.DISCORD_TOKEN);
 
     // グローバルコマンドとして登録
     console.log("🔄 コマンド登録中…");
