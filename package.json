@@ -18,7 +18,7 @@
   "scripts": {
     "start": "ts-node app/index.ts",
     "dev": "nodemon --exec tsx app/index.ts",
-    "deploy": "tsx app/deploy-commands.ts"
+    "deploy": "tsx --tsconfig ./tsconfig.json app/deploy-commands.ts"
   },
   "repository": {
     "type": "git",

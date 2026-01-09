@@ -12,6 +12,6 @@ export default {
 
         // 
         const index = Math.floor(Math.random() * LINES.length);
-        await inter.reply(LINES[index]);
+        await inter.reply(LINES[index] ?? "");
     }
 };

@@ -96,7 +96,7 @@ export default {
         const board = generateBoard(edge, edge, freq);
 
         // 最初に開けるマスをランダムで1つ選ぶ
-        let firstRow, firstCol;
+        let firstRow : number, firstCol : number;
         do {
             firstRow = Math.floor(Math.random() * edge);
             firstCol = Math.floor(Math.random() * edge);
