@@ -3,7 +3,12 @@ import { SlashCommandBuilder, EmbedBuilder, ChatInputCommandInteraction } from "
 export default {
     data: new SlashCommandBuilder()
         .setName("help")
-        .setDescription("コマンド一覧、詳細を表示するのじゃ！"),
+        .setDescription("コマンド一覧、詳細を表示するのじゃ！")
+        .addIntegerOption(option =>
+            option.setName("command")
+                .setDescription("コマンド名")
+                .setRequired(false)
+        ),
 
     async execute(inter: ChatInputCommandInteraction) {
         // オプション確認用ログ
